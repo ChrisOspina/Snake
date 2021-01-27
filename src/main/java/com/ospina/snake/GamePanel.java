@@ -108,7 +108,32 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     
     public void checkCollisions(){
-        
+        //checks if head collides with body
+        for(int i=bodyparts;i>0;i--)
+        {
+            if((x[0] == x[i])&&(y[0]==y[i])){
+                running = false;
+            }
+        }
+        //checks if head touches left corner
+        if(x[0]<0){
+            running = false;
+        }
+        //checks if head touches right corner
+        if(x[0]> SCREEN_WIDTH){
+            running = false;
+        }
+        //checks if head touches top border
+        if(y[0] <0){
+            running = false;
+        }
+        //checks if head touches bottom border
+        if(y[0]>SCREEN_HEIGHT){
+            running = false;
+        }
+        if(!running){
+            timer.stop();
+        }
     }
     
     public void GameOver(Graphics g){
@@ -117,7 +142,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(running){
+            move();
+            checkApple();
+            checkCollisions();
+        }
+        repaint();
     }
     
     public class MyKeyAdapter extends KeyAdapter
@@ -125,6 +155,31 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e)
         {
+            switch(e.getKeyCode()){
+                case KeyEvent.VK_LEFT:
+                    if(direction !='E'){
+                        direction = 'W';
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if(direction !='W'){
+                        direction = 'E';
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    if(direction !='S'){
+                        direction = 'N';
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if(direction !='N'){
+                        direction = 'S';
+                    }
+                    break;
+                    
+                    
+                
+            }
             
         }
     }
